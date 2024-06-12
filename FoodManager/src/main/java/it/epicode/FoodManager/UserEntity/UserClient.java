@@ -25,5 +25,4 @@ public class UserClient extends BaseEntity {
     @OneToMany(mappedBy = "client")
     private List<Order> orders;
 
-
 }

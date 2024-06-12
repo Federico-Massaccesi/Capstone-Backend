@@ -6,6 +6,7 @@ import it.epicode.FoodManager.UserEntity.UserClient;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -24,6 +25,10 @@ public class Order extends BaseEntity {
 
     @ManyToMany
     private List<Product> products;
+
+    private LocalDate localDate = LocalDate.now();
+
+    private Boolean pending = true;
 
     public Double getTotalPrice(){
 

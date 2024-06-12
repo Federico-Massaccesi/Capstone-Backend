@@ -1,5 +1,6 @@
 package it.epicode.FoodManager.Product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.epicode.FoodManager.BaseEntity;
 import it.epicode.FoodManager.Order.Order;
 import jakarta.persistence.Entity;
@@ -20,7 +21,7 @@ public class Product extends BaseEntity {
 
     private String name;
 
-    private Category category;
+    private List<String> categories;
 
     private Double price;
 
@@ -31,5 +32,6 @@ public class Product extends BaseEntity {
     private Boolean available;
 
     @ManyToMany
+    @JsonIgnore
     private List<Order> orders;
 }
