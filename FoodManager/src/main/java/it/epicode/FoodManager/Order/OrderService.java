@@ -1,13 +1,14 @@
 package it.epicode.FoodManager.Order;
 
 import it.epicode.FoodManager.UserEntity.ClientRepository;
-import org.springframework.beans.BeanUtils;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class OrderService {
 
     @Autowired

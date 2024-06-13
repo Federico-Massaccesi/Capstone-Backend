@@ -5,9 +5,7 @@ import it.epicode.FoodManager.Order.Order;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.util.List;
 
@@ -16,13 +14,24 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Builder(setterPrefix = "with")
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserClient extends BaseEntity {
 
     private String username;
 
     private String password;
 
+    private String companyName;
+
     @OneToMany(mappedBy = "client")
     private List<Order> orders;
+    @OneToMany(mappedBy = "client")
+    private List<Order> pendingOrders;
 
+    private String pIVA;
+
+    private String address;
+
+    private String city;
 }
