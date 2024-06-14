@@ -12,8 +12,6 @@ public class ProductService {
     @Autowired
     ProductRepository repository;
 
-    @Autowired
-
     public Product save(Product product){
         return repository.save(product);
     }

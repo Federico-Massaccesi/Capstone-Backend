@@ -1,8 +1,13 @@
 package it.epicode.FoodManager.security;
 
+import it.epicode.FoodManager.UserEntity.Roles;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import javax.management.relation.Role;
+import java.util.List;
 
 public record RegisterUserModel(
 
@@ -21,7 +26,9 @@ public record RegisterUserModel(
         @NotBlank
         String companyName,
         @NotBlank
-        String pIVA
+        String pIVA,
+        @NotNull
+        List<Roles> roles
 
 ) {
 }

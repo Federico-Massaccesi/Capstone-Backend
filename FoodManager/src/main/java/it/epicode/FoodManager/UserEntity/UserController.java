@@ -33,12 +33,13 @@ public class UserController {
                         .withCity(model.city())
                         .withCompanyName(model.companyName())
                         .withPIVA(model.pIVA())
+                        .withRoles(model.roles())
                         .build());
 
         return  new ResponseEntity<> (registeredUser, HttpStatus.OK);
     }
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Validated LoginModel model, BindingResult validator) {
         if (validator.hasErrors()) {
             throw  new ApiValidationException(validator.getAllErrors());
