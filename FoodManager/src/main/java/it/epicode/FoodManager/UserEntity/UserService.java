@@ -48,6 +48,7 @@ public class UserService {
                             .build())
                     .build();
 
+
             dto.setToken(jwt.generateToken(a));
 
             return Optional.of(dto);
