@@ -1,9 +1,5 @@
 package it.epicode.FoodManager.Product;
 
-import it.epicode.FoodManager.Order.Order;
-import it.epicode.FoodManager.Order.OrderRepository;
-import it.epicode.FoodManager.Order.SaveOrderDTO;
-import it.epicode.FoodManager.UserEntity.ClientRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

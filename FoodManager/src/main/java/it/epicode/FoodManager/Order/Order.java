@@ -2,7 +2,7 @@ package it.epicode.FoodManager.Order;
 
 import it.epicode.FoodManager.BaseEntity;
 import it.epicode.FoodManager.Product.Product;
-import it.epicode.FoodManager.UserEntity.UserClient;
+import it.epicode.FoodManager.UserEntity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,7 +21,7 @@ public class Order extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-    private UserClient client;
+    private UserEntity client;
 
     @ManyToMany
     private List<Product> products;

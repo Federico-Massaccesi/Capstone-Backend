@@ -1,6 +1,6 @@
 package it.epicode.FoodManager.Order;
 
-import it.epicode.FoodManager.UserEntity.ClientRepository;
+import it.epicode.FoodManager.UserEntity.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ public class OrderService {
     OrderRepository orderRepository;
 
     @Autowired
-    ClientRepository clientRepository;
+    UserRepository clientRepository;
 
     public Order save(SaveOrderDTO order){
         var founded = clientRepository.findById(order.getIdClient());

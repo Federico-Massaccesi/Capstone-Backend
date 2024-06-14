@@ -2,11 +2,10 @@ package it.epicode.FoodManager.UserEntity;
 
 import it.epicode.FoodManager.BaseEntity;
 import it.epicode.FoodManager.Order.Order;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -16,7 +15,7 @@ import java.util.List;
 @Builder(setterPrefix = "with")
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserClient extends BaseEntity {
+public class UserEntity extends BaseEntity {
 
     private String username;
 
@@ -29,9 +28,13 @@ public class UserClient extends BaseEntity {
     @OneToMany(mappedBy = "client")
     private List<Order> pendingOrders;
 
+    private String email;
+
     private String pIVA;
 
     private String address;
 
     private String city;
-}
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private final List<Roles> roles = new ArrayList<>();}
