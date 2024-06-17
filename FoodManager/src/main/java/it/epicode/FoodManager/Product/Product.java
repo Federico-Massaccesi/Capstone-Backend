@@ -8,6 +8,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -33,5 +34,5 @@ public class Product extends BaseEntity {
 
     @ManyToMany
     @JsonIgnore
-    private List<Order> orders;
+    private List<Order> orders = new ArrayList<>();
 }

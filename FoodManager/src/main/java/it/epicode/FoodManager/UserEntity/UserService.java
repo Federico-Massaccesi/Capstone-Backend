@@ -64,16 +64,9 @@ public class UserService {
         if(userRepository.existsByEmail(register.getEmail())){
             throw new EntityExistsException("Email gia' registrata");
         }
-        Roles roles = rolesRepository.findById(Roles.ROLES_USER).get();
-        /*
-        if(!rolesRepository.existsById(Roles.ROLES_USER)){
-            roles = new Roles();
-            roles.setRoleType(Roles.ROLES_USER);
-        } else {
-            roles = rolesRepository.findById(Roles.ROLES_USER).get();
-        }
+        Roles roles = rolesRepository.findById(register.getRoles().get(0).getRoleType())
+                .orElseThrow(() -> new IllegalArgumentException("Ruolo non valido"));
 
-         */
         UserEntity u = new UserEntity();
         BeanUtils.copyProperties(register, u);
         u.setPassword(encoder.encode(register.getPassword()));
