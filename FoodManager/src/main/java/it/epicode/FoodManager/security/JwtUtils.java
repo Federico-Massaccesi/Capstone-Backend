@@ -12,7 +12,6 @@ import javax.crypto.SecretKey;
 import java.security.Key;
 import java.util.Date;
 
-//CLASSE CHE GENERA E CONTROLLA IL TOKEN (JWT)
 @Component
 public class JwtUtils {
 

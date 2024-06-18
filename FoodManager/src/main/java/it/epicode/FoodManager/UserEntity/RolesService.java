@@ -17,4 +17,5 @@ public class RolesService {
     public boolean existsByRoleType(String roleType) {
         return rolesRepository.existsById(roleType);
     }
+
 }

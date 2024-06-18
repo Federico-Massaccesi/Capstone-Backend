@@ -23,12 +23,8 @@ public record RegisterUserModel(
         String address,
         @NotBlank
         String city,
-        @NotBlank
         String companyName,
-        @NotBlank
         String pIVA,
-        @NotNull
         List<Roles> roles
-
 ) {
 }

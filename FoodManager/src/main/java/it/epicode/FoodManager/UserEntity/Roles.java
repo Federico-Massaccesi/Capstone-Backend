@@ -12,8 +12,10 @@ import lombok.*;
 @Builder(setterPrefix = "with")
 public class Roles {
     public static final String ROLES_ADMIN = "ADMIN";
-    public static final String ROLES_USER = "USER";
+    public static final String ROLES_PRIVATE = "PRIVATE";
     public static final String ROLES_WAREHOUSE = "WAREHOUSE";
+    public static final String ROLES_COMPANY = "COMPANY";
+
 
 
     @Id

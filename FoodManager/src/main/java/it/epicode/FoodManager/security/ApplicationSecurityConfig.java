@@ -56,7 +56,7 @@ public class ApplicationSecurityConfig {
                 .authorizeHttpRequests(authorize ->
                         authorize //CONFIGURAZIONE DELLA PROTEZIONE DEI VARI ENDPOINT
                                 .requestMatchers("/users/login").permitAll()
-                              .requestMatchers(HttpMethod.POST, "/users").permitAll() //ENDPOINT DI REGISTRAZIONE APERTO A TUTTI
+                              .requestMatchers(HttpMethod.POST, "/users/register").permitAll() //ENDPOINT DI REGISTRAZIONE APERTO A TUTTI
                                 .requestMatchers(HttpMethod.POST, "/api/products").hasAuthority("ADMIN")
 //                                .requestMatchers(HttpMethod.GET, "/**").authenticated() //TUTTE GLI ENDPOINTS DI TIPO GET SONO RICHIAMABILI SOLO SE L'UTENTE E AUTENTICATO
 //                                .requestMatchers(HttpMethod.POST, "/**").hasAuthority("ADMIN") //TUTTE LE POST POSSONO ESSERE FATTE SOLO DALL'ADMIN
@@ -65,6 +65,8 @@ public class ApplicationSecurityConfig {
 //                                .requestMatchers(HttpMethod.DELETE, "/**").hasAuthority("ADMIN") //TUTTE LE DELETE POSSONO ESSERE FATTE SOLO DALL'ADMIN
 //                                .requestMatchers("/**").authenticated() //TUTTO CIO CHE PUO ESSERE SFUGGITO RICHIEDE L'AUTENTICAZIONE (SERVE A GESTIRE EVENTUALI DIMENTICANZE)
                                 //.requestMatchers("/**").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/roles").hasAuthority("ADMIN")
+
                 )
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

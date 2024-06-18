@@ -6,13 +6,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:4200")
+
 public class UserController {
 
     @Autowired
@@ -23,20 +22,24 @@ public class UserController {
         if (validator.hasErrors()) {
             throw new ApiValidationException(validator.getAllErrors());
         }
+try {
+    var registeredUser = user.register(
+            RegisterUserDTO.builder()
+                    .withUsername(model.username())
+                    .withEmail(model.email())
+                    .withPassword(model.password())
+                    .withAddress(model.address())
+                    .withCity(model.city())
+                    .withCompanyName(model.companyName())
+                    .withPIVA(model.pIVA())
+                    .withRoles(model.roles())
+                    .build());
 
-        var registeredUser = user.register(
-                RegisterUserDTO.builder()
-                        .withUsername(model.username())
-                        .withEmail(model.email())
-                        .withPassword(model.password())
-                        .withAddress(model.address())
-                        .withCity(model.city())
-                        .withCompanyName(model.companyName())
-                        .withPIVA(model.pIVA())
-                        .withRoles(model.roles())
-                        .build());
+    return  new ResponseEntity<> (registeredUser, HttpStatus.OK);
+}catch (Exception e){
+    throw new RuntimeException("Errore durante la registrazione");
+}
 
-        return  new ResponseEntity<> (registeredUser, HttpStatus.OK);
     }
 
     @PostMapping("/login")
