@@ -18,7 +18,7 @@ public class UserController {
     @Autowired
     private UserService user;
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<RegisteredUserDTO> register(@RequestBody @Validated RegisterUserModel model, BindingResult validator){
         if (validator.hasErrors()) {
             throw new ApiValidationException(validator.getAllErrors());
