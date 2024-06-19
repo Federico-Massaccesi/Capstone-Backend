@@ -54,10 +54,12 @@ public class ApplicationSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults()) // Utilizza la configurazione CORS
                 .authorizeHttpRequests(authorize ->
-                        authorize //CONFIGURAZIONE DELLA PROTEZIONE DEI VARI ENDPOINT
+                        authorize
                                 .requestMatchers("/users/login").permitAll()
                               .requestMatchers(HttpMethod.POST, "/users/register").permitAll() //ENDPOINT DI REGISTRAZIONE APERTO A TUTTI
                                 .requestMatchers(HttpMethod.POST, "/api/products").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/products").authenticated()
+
 //                                .requestMatchers(HttpMethod.GET, "/**").authenticated() //TUTTE GLI ENDPOINTS DI TIPO GET SONO RICHIAMABILI SOLO SE L'UTENTE E AUTENTICATO
 //                                .requestMatchers(HttpMethod.POST, "/**").hasAuthority("ADMIN") //TUTTE LE POST POSSONO ESSERE FATTE SOLO DALL'ADMIN
 //                                .requestMatchers(HttpMethod.PATCH, "/users/{id}").authenticated() //SOLO UN UTENTE AUTENTICATO PUO MODIFICARE I SUOI DATI
