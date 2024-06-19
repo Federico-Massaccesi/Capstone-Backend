@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,11 +25,13 @@ public class Order extends BaseEntity {
     private UserEntity client;
 
     @ManyToMany
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
 
     private LocalDate localDate = LocalDate.now();
 
     private Boolean pending = true;
+
+    private Double totalPrice = getTotalPrice();
 
     public Double getTotalPrice(){
 
