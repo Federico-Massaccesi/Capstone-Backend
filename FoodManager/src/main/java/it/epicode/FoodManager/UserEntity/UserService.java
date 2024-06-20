@@ -61,9 +61,9 @@ public class UserService {
         if(userRepository.existsByUsername(register.getUsername())){
             throw new EntityExistsException("Utente gia' esistente");
         }
-        if(userRepository.existsByEmail(register.getEmail())){
-            throw new EntityExistsException("Email gia' registrata");
-        }
+//        if(userRepository.existsByEmail(register.getEmail())){
+//            throw new EntityExistsException("Email gia' registrata");
+//        }
         Roles roles = rolesRepository.findById(register.getRoles().get(0).getRoleType())
                 .orElseThrow(() -> new IllegalArgumentException("Ruolo non valido"));
 
