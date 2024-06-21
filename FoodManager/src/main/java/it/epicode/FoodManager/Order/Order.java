@@ -31,6 +31,8 @@ public class Order extends BaseEntity {
 
     private Boolean pending = true;
 
+    private Boolean checked = false;
+
     private Double totalPrice = getTotalPrice();
 
     public Double getTotalPrice(){

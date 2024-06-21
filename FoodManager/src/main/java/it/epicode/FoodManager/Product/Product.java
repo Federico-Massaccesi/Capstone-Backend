@@ -8,6 +8,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,8 @@ public class Product extends BaseEntity {
 
     private String name;
 
-    private List<String> categories;
+    @ManyToMany
+    private List<Category> categories;
 
     private Double price;
 
@@ -35,4 +37,5 @@ public class Product extends BaseEntity {
     @ManyToMany
     @JsonIgnore
     private List<Order> orders = new ArrayList<>();
+
 }

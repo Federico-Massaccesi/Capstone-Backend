@@ -1,9 +1,6 @@
 package it.epicode.FoodManager.Product;
 
 import com.cloudinary.Cloudinary;
-import it.epicode.FoodManager.Order.Order;
-import it.epicode.FoodManager.Order.OrderService;
-import it.epicode.FoodManager.Order.SaveOrderDTO;
 import it.epicode.FoodManager.security.ApiValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +23,9 @@ public class ProductController {
 
     @Autowired
     Cloudinary cloudinary;
+
+    @Autowired
+    CategoryRepository catRepo;
 
     @GetMapping
     public ResponseEntity<List<Product>> getAll() {
@@ -50,10 +50,12 @@ public class ProductController {
 
             String url = uploadResult.get("url").toString();
 
+            List<Category> listcategories = catRepo.findAllById(product.categories());
+
             var newProduct = Product.builder()
                     .withName(product.name())
                     .withAvailable(product.available())
-                    .withCategories(product.categories())
+                    .withCategories(listcategories)
                     .withDescription(product.description())
                     .withPrice(product.price())
                     .withImageURL(url)

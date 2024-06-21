@@ -57,9 +57,12 @@ public class ApplicationSecurityConfig {
                         authorize
                                 .requestMatchers("/users/login").permitAll()
                               .requestMatchers(HttpMethod.POST, "/users/register").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/products").hasAuthority("ADMIN")
+//                                .requestMatchers(HttpMethod.POST, "/api/products").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/products/**").authenticated()
                                 .requestMatchers(HttpMethod.DELETE, "/**").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/products").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/categories").permitAll()
+                                .requestMatchers(HttpMethod.POST,"/categories").hasAuthority("ADMIN")
 
 //                                .requestMatchers(HttpMethod.GET, "/**").authenticated() //TUTTE GLI ENDPOINTS DI TIPO GET SONO RICHIAMABILI SOLO SE L'UTENTE E AUTENTICATO
 //                                .requestMatchers(HttpMethod.POST, "/**").hasAuthority("ADMIN") //TUTTE LE POST POSSONO ESSERE FATTE SOLO DALL'ADMIN
@@ -68,7 +71,7 @@ public class ApplicationSecurityConfig {
 //                                .requestMatchers(HttpMethod.DELETE, "/**").hasAuthority("ADMIN") //TUTTE LE DELETE POSSONO ESSERE FATTE SOLO DALL'ADMIN
 //                                .requestMatchers("/**").authenticated() //TUTTO CIO CHE PUO ESSERE SFUGGITO RICHIEDE L'AUTENTICAZIONE (SERVE A GESTIRE EVENTUALI DIMENTICANZE)
                                 //.requestMatchers("/**").permitAll()
-//                                .requestMatchers(HttpMethod.POST, "/roles").hasAuthority("ADMIN")
+//                                .requestMatchers(HttpMethod.POST, "/roles").permitAll()
 
                 )
                 .httpBasic(Customizer.withDefaults())
