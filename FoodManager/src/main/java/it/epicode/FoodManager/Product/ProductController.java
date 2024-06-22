@@ -70,6 +70,24 @@ public class ProductController {
         }
     }
 
+    @PutMapping("/{id}/availability")
+    public ResponseEntity<Product> updateProductAvailability(
+            @PathVariable Long id,
+            @RequestParam boolean available
+    ) {
+        Product updatedProduct = service.updateProductAvailability(id, available);
+        return ResponseEntity.ok(updatedProduct);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateProduct(
+            @PathVariable Long id,
+            @RequestBody Product updatedProduct
+    ) {
+        Product product = service.updateProduct(id, updatedProduct);
+        return ResponseEntity.ok(product);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         service.deleteById(id);

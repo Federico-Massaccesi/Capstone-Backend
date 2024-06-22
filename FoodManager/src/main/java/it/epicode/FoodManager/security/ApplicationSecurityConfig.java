@@ -63,6 +63,7 @@ public class ApplicationSecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/api/products").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/categories").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/categories").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.PUT,"/api/products/**").hasAuthority("ADMIN")
 
 //                                .requestMatchers(HttpMethod.GET, "/**").authenticated() //TUTTE GLI ENDPOINTS DI TIPO GET SONO RICHIAMABILI SOLO SE L'UTENTE E AUTENTICATO
 //                                .requestMatchers(HttpMethod.POST, "/**").hasAuthority("ADMIN") //TUTTE LE POST POSSONO ESSERE FATTE SOLO DALL'ADMIN
