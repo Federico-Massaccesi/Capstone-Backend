@@ -44,7 +44,7 @@ public class ProductController {
     }
 
     @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<?> save(@RequestPart("product") @Validated ProductValid product, @RequestPart("file") MultipartFile file, BindingResult validator) throws IOException {
+    public ResponseEntity<?> save(@RequestPart("product") @Validated ProductValidPost product, @RequestPart("file") MultipartFile file, BindingResult validator) throws IOException {
         try {
             if (validator.hasErrors()) {
                 throw new ApiValidationException(validator.getAllErrors());
@@ -88,7 +88,7 @@ public class ProductController {
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateProduct(
             @PathVariable Long id,
-            @RequestPart("product") @Validated ProductValid product,
+            @RequestPart(value = "product",required = false) @Validated ProductValidPut product,
             @RequestPart(value = "file", required = false) MultipartFile file,
             BindingResult validator
     ) {
@@ -96,27 +96,34 @@ public class ProductController {
             if (validator.hasErrors()) {
                 throw new ApiValidationException(validator.getAllErrors());
             }
-
-            String imageUrl = null;
-            if (file != null) {
-                var uploadResult = cloudinary.uploader().upload(file.getBytes(),
-                        com.cloudinary.utils.ObjectUtils.asMap("public_id", product.name() + "_avatar"));
-                imageUrl = uploadResult.get("url").toString();
-            }
-
             Product existingProduct = prodRepo.getById(id);
 
-            String publicId = extractPublicIdFromUrl(existingProduct.getImageURL());
-            cloudinary.uploader().destroy(publicId, null);
+            String imageUrl = existingProduct.getImageURL();
 
-            List<Category> listCategories = catRepo.findAllById(product.categories());
+            if (product != null) {
 
-            existingProduct.setName(product.name());
-            existingProduct.setAvailable(product.available());
-            existingProduct.setCategories(listCategories);
-            existingProduct.setDescription(product.description());
-            existingProduct.setPrice(product.price());
-            existingProduct.setImageURL(imageUrl != null ? imageUrl : existingProduct.getImageURL());
+                List<Category> listCategories = catRepo.findAllById(product.categories());
+
+                if (file != null && !file.isEmpty()) {
+                    var uploadResult = cloudinary.uploader().upload(file.getBytes(),
+                            com.cloudinary.utils.ObjectUtils.asMap("public_id", product.name() + "_avatar"));
+                    imageUrl = uploadResult.get("url").toString();
+
+                    String publicId = extractPublicIdFromUrl(existingProduct.getImageURL());
+                    cloudinary.uploader().destroy(publicId, null);
+
+                    existingProduct.setImageURL(imageUrl);
+
+                }
+
+                existingProduct.setName(product.name());
+                existingProduct.setAvailable(product.available());
+                existingProduct.setCategories(listCategories);
+                existingProduct.setDescription(product.description());
+                existingProduct.setPrice(product.price());
+            }
+
+
 
             Product updatedProduct = service.updateProduct(id, existingProduct);
 

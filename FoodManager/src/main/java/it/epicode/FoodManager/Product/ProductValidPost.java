@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
 
-public record ProductValid(
+public record ProductValidPost(
         @NotBlank
          String name,
          @NotEmpty
