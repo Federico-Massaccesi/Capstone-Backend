@@ -1,5 +1,6 @@
 package it.epicode.FoodManager.Product;
 
+import com.cloudinary.Cloudinary;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -13,6 +14,8 @@ public class ProductService {
 
     @Autowired
     ProductRepository repository;
+
+
 
     public Product save(Product product){
         return repository.save(product);

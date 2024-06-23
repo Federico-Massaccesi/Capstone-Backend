@@ -28,6 +28,9 @@ public class ProductController {
     @Autowired
     CategoryRepository catRepo;
 
+    @Autowired
+    ProductRepository prodRepo;
+
     @GetMapping
     public ResponseEntity<List<Product>> getAll() {
 
@@ -82,17 +85,61 @@ public class ProductController {
     }
 
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> updateProduct(
             @PathVariable Long id,
-            @RequestBody Product updatedProduct
+            @RequestPart("product") @Validated ProductValid product,
+            @RequestPart(value = "file", required = false) MultipartFile file,
+            BindingResult validator
     ) {
-        Product product = service.updateProduct(id, updatedProduct);
-        return ResponseEntity.ok(product);
+        try {
+            if (validator.hasErrors()) {
+                throw new ApiValidationException(validator.getAllErrors());
+            }
+
+            String imageUrl = null;
+            if (file != null) {
+                var uploadResult = cloudinary.uploader().upload(file.getBytes(),
+                        com.cloudinary.utils.ObjectUtils.asMap("public_id", product.name() + "_avatar"));
+                imageUrl = uploadResult.get("url").toString();
+            }
+
+            Product existingProduct = prodRepo.getById(id);
+
+            String publicId = extractPublicIdFromUrl(existingProduct.getImageURL());
+            cloudinary.uploader().destroy(publicId, null);
+
+            List<Category> listCategories = catRepo.findAllById(product.categories());
+
+            existingProduct.setName(product.name());
+            existingProduct.setAvailable(product.available());
+            existingProduct.setCategories(listCategories);
+            existingProduct.setDescription(product.description());
+            existingProduct.setPrice(product.price());
+            existingProduct.setImageURL(imageUrl != null ? imageUrl : existingProduct.getImageURL());
+
+            Product updatedProduct = service.updateProduct(id, existingProduct);
+
+            return ResponseEntity.ok(updatedProduct);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Errore durante il caricamento dell'immagine su Cloudinary: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         service.deleteById(id);
+    }
+
+    private String extractPublicIdFromUrl(String imageUrl) {
+        String[] parts = imageUrl.split("/");
+
+        String publicIdWithExtension = parts[parts.length - 1];
+
+        String publicId = publicIdWithExtension.split("\\.")[0];
+
+        return publicId;
     }
 }
