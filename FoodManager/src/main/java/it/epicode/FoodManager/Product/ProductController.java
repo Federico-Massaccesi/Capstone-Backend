@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/products")
@@ -70,14 +71,16 @@ public class ProductController {
         }
     }
 
-    @PutMapping("/{id}/availability")
+    @PatchMapping("/{id}/availability")
     public ResponseEntity<Product> updateProductAvailability(
             @PathVariable Long id,
-            @RequestParam boolean available
+            @RequestBody Map<String, Boolean> request
     ) {
+        boolean available = request.get("available");
         Product updatedProduct = service.updateProductAvailability(id, available);
         return ResponseEntity.ok(updatedProduct);
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(
