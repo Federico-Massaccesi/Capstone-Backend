@@ -25,8 +25,6 @@ public class UserEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "client")
     private List<Order> orders;
-    @OneToMany(mappedBy = "client")
-    private List<Order> pendingOrders;
 
     private String email;
 
