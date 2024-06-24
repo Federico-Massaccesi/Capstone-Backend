@@ -2,8 +2,6 @@ package it.epicode.FoodManager.Product;
 
 import it.epicode.FoodManager.BaseEntity;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

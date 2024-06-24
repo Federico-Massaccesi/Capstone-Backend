@@ -8,6 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -16,6 +18,18 @@ public class UserController {
 
     @Autowired
     private UserService user;
+
+    @GetMapping
+    public ResponseEntity<List<UserEntity>> getAll() {
+
+        return ResponseEntity.ok(user.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserEntity> getById(@PathVariable Long id) {
+
+        return ResponseEntity.ok(user.findById(id));
+    }
 
     @PostMapping("/register")
     public ResponseEntity<RegisteredUserDTO> register(@RequestBody @Validated RegisterUserModel model, BindingResult validator){

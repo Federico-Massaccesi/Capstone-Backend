@@ -57,6 +57,7 @@ public class ApplicationSecurityConfig {
                         authorize
                                 .requestMatchers("/users/login").permitAll()
                               .requestMatchers(HttpMethod.POST, "/users/register").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/users/**").hasAuthority("ADMIN")
 //                                .requestMatchers(HttpMethod.POST, "/api/products").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/products/**").authenticated()
                                 .requestMatchers(HttpMethod.DELETE, "/**").hasAuthority("ADMIN")
@@ -64,7 +65,7 @@ public class ApplicationSecurityConfig {
                                 .requestMatchers(HttpMethod.GET,"/categories").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/categories").hasAuthority("ADMIN")
 //                                .requestMatchers(HttpMethod.PUT,"/api/products/{id}/availability").permitAll()
-                                .requestMatchers(HttpMethod.PATCH,"/api/products/**").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.PATCH,"/api/products/**").hasAnyAuthority("ADMIN","WAREHOUSE")
                                 .requestMatchers(HttpMethod.PUT).permitAll()
 
 
