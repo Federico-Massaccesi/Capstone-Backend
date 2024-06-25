@@ -11,6 +11,7 @@ import java.util.List;
 @Transactional
 public class OrderService {
 
+
     @Autowired
     OrderRepository orderRepository;
 
@@ -20,13 +21,16 @@ public class OrderService {
     public Order save(SaveOrderDTO order){
         var founded = clientRepository.findById(order.getIdClient());
         if(founded.isPresent()){
-           Order newOrder = Order.builder()
-                   .withClient(founded.get())
-                   .withProducts(order.getProducts())
-                   .build();
-           //CONTROLLARE SE GLI ATTRIBUTI VALORIZZATI PER DEFAULT VENGONO VISUALIZZATI
+            List<CartItem> cartItems = order.getProducts().stream()
+                    .map(product -> new CartItem(product.getProduct(), product.getQuantity()))
+                    .toList();
+            Order newOrder = Order.builder()
+                    .withClient(founded.get())
+                    .withItems(cartItems)
+                    .withTotalPrice(order.getTotalPrice())
+                    .build();
             return orderRepository.save(newOrder);
-        }else{
+        } else {
             throw new RuntimeException("Utente non trovato");
         }
     }
@@ -38,18 +42,11 @@ public class OrderService {
     public Order findById(Long id){
         var founded = orderRepository.findById(id);
         if(founded.isPresent()){
-            return orderRepository.findById(id).get();
-        }else{
-            throw new RuntimeException("Utente non trovato");
+            return founded.get();
+        } else {
+            throw new RuntimeException("Ordine non trovato");
         }
     }
-//DA RAGIONARE
-//    public Order modify(Long id, SaveOrderDTO order){
-//
-//        Order modifiedOrder = new Order();
-//
-//        BeanUtils.copyProperties(order, modifiedOrder);
-//    }
 
     public void deleteById(Long id){
         orderRepository.deleteById(id);

@@ -24,8 +24,9 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "client_id")
     private UserEntity client;
 
-    @ManyToMany
-    private List<Product> products = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(name = "order_items", joinColumns = @JoinColumn(name = "order_id"))
+    private List<CartItem> items  = new ArrayList<>();
 
     private LocalDate localDate = LocalDate.now();
 
@@ -33,15 +34,7 @@ public class Order extends BaseEntity {
 
     private Boolean checked = false;
 
-    private Double totalPrice = getTotalPrice();
+    private Double totalPrice;
 
-    public Double getTotalPrice(){
 
-        double totalPrice = 0.0;
-
-        for (Product product : this.products) {
-            totalPrice += product.getPrice();
-        }
-        return totalPrice;
-    }
 }

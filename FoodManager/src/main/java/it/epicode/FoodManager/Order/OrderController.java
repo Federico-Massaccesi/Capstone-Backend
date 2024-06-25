@@ -26,8 +26,9 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Order> save(@RequestBody SaveOrderDTO order) {
-        return ResponseEntity.ok(service.save(order));
+    public ResponseEntity<Order> createOrder(@RequestBody SaveOrderDTO order) {
+        Order savedOrder = service.save(order);
+        return ResponseEntity.ok(savedOrder);
     }
 
     @DeleteMapping

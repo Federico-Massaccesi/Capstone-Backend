@@ -61,12 +61,13 @@ public class ApplicationSecurityConfig {
 //                                .requestMatchers(HttpMethod.POST, "/api/products").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/products/**").authenticated()
                                 .requestMatchers(HttpMethod.DELETE, "/**").hasAuthority("ADMIN")
-                                .requestMatchers(HttpMethod.POST, "/api/products").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/products").hasAuthority("ADMIN")
                                 .requestMatchers(HttpMethod.GET,"/categories").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/categories").hasAuthority("ADMIN")
 //                                .requestMatchers(HttpMethod.PUT,"/api/products/{id}/availability").permitAll()
                                 .requestMatchers(HttpMethod.PATCH,"/api/products/**").hasAnyAuthority("ADMIN","WAREHOUSE")
                                 .requestMatchers(HttpMethod.PUT).permitAll()
+                                .requestMatchers(HttpMethod.POST,"/api/orders").authenticated()
 
 
 //                                .requestMatchers(HttpMethod.GET, "/**").authenticated() //TUTTE GLI ENDPOINTS DI TIPO GET SONO RICHIAMABILI SOLO SE L'UTENTE E AUTENTICATO
