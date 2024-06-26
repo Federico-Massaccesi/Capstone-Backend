@@ -102,7 +102,6 @@ public class ProductController {
 
             if (product != null) {
 
-                List<Category> listCategories = catRepo.findAllById(product.categories());
 
                 if (file != null && !file.isEmpty()) {
                     var uploadResult = cloudinary.uploader().upload(file.getBytes(),
@@ -118,7 +117,7 @@ public class ProductController {
 
                 existingProduct.setName(product.name());
                 existingProduct.setAvailable(product.available());
-                existingProduct.setCategories(listCategories);
+                existingProduct.setCategories(product.categories());
                 existingProduct.setDescription(product.description());
                 existingProduct.setPrice(product.price());
             }

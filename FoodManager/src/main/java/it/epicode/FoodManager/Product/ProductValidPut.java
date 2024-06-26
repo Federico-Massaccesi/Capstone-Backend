@@ -9,7 +9,7 @@ import java.util.List;
 
 public record ProductValidPut(
         String name,
-        List<Long> categories,
+        List<Category> categories,
         Double price,
         String description,
         Boolean available

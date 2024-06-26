@@ -21,17 +21,18 @@ import java.util.List;
 public class Order extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "client_id")
     private UserEntity client;
 
     @ElementCollection
     @CollectionTable(name = "order_items", joinColumns = @JoinColumn(name = "order_id"))
     private List<CartItem> items  = new ArrayList<>();
 
+    @Builder.Default
     private LocalDate localDate = LocalDate.now();
 
+    @Builder.Default
     private Boolean pending = true;
-
+    @Builder.Default
     private Boolean checked = false;
 
     private Double totalPrice;

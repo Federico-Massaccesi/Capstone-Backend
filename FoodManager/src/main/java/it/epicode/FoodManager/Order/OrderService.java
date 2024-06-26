@@ -18,22 +18,25 @@ public class OrderService {
     @Autowired
     UserRepository clientRepository;
 
-    public Order save(SaveOrderDTO order){
-        var founded = clientRepository.findById(order.getIdClient());
-        if(founded.isPresent()){
+    public Order save(SaveOrderDTO order) {
+        var founded = clientRepository.findById(order.getClientId());
+        if (founded.isPresent()) {
             List<CartItem> cartItems = order.getProducts().stream()
-                    .map(product -> new CartItem(product.getProduct(), product.getQuantity()))
+                    .map(item -> new CartItem(item.getProduct(), item.getQuantity()))
                     .toList();
             Order newOrder = Order.builder()
                     .withClient(founded.get())
                     .withItems(cartItems)
                     .withTotalPrice(order.getTotalPrice())
                     .build();
+
             return orderRepository.save(newOrder);
         } else {
-            throw new RuntimeException("Utente non trovato");
+            throw new RuntimeException("Client not found");
         }
     }
+
+
 
     public List<Order> findAll(){
         return orderRepository.findAll();

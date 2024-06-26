@@ -58,26 +58,15 @@ public class ApplicationSecurityConfig {
                                 .requestMatchers("/users/login").permitAll()
                               .requestMatchers(HttpMethod.POST, "/users/register").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/users/**").hasAuthority("ADMIN")
-//                                .requestMatchers(HttpMethod.POST, "/api/products").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/products/**").authenticated()
                                 .requestMatchers(HttpMethod.DELETE, "/**").hasAuthority("ADMIN")
                                 .requestMatchers(HttpMethod.POST, "/api/products").hasAuthority("ADMIN")
                                 .requestMatchers(HttpMethod.GET,"/categories").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/categories").hasAuthority("ADMIN")
-                                .requestMatchers(HttpMethod.PUT,"/api/products/{id}/availability").permitAll()
+                                .requestMatchers(HttpMethod.PUT,"/api/products/{id}/availability").hasAnyAuthority("ADMIN","WAREHOUSE")
                                 .requestMatchers(HttpMethod.PATCH,"/api/products/**").hasAnyAuthority("ADMIN","WAREHOUSE")
-                                .requestMatchers(HttpMethod.PUT).permitAll()
-                                .requestMatchers(HttpMethod.POST,"/api/orders").authenticated()
-
-
-//                                .requestMatchers(HttpMethod.GET, "/**").authenticated() //TUTTE GLI ENDPOINTS DI TIPO GET SONO RICHIAMABILI SOLO SE L'UTENTE E AUTENTICATO
-//                                .requestMatchers(HttpMethod.POST, "/**").hasAuthority("ADMIN") //TUTTE LE POST POSSONO ESSERE FATTE SOLO DALL'ADMIN
-//                                .requestMatchers(HttpMethod.PATCH, "/users/{id}").authenticated() //SOLO UN UTENTE AUTENTICATO PUO MODIFICARE I SUOI DATI
-//                                .requestMatchers(HttpMethod.PUT, "/**").hasAuthority("ADMIN") //TUTTE LE PUT POSSONO ESSERE FATTE SOLO DALL'ADMIN
-//                                .requestMatchers(HttpMethod.DELETE, "/**").hasAuthority("ADMIN") //TUTTE LE DELETE POSSONO ESSERE FATTE SOLO DALL'ADMIN
-//                                .requestMatchers("/**").authenticated() //TUTTO CIO CHE PUO ESSERE SFUGGITO RICHIEDE L'AUTENTICAZIONE (SERVE A GESTIRE EVENTUALI DIMENTICANZE)
-                                //.requestMatchers("/**").permitAll()
-//                                .requestMatchers(HttpMethod.POST, "/roles").permitAll()
+                                .requestMatchers(HttpMethod.PUT).hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.POST,"/api/orders").hasAnyAuthority("PRIVATE","COMPANY")
 
                 )
                 .httpBasic(Customizer.withDefaults())

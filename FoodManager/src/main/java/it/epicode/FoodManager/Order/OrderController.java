@@ -25,7 +25,7 @@ public class OrderController {
         return ResponseEntity.ok(service.findById(id));
     }
 
-    @PostMapping
+    @PostMapping(produces = "application/json")
     public ResponseEntity<Order> createOrder(@RequestBody SaveOrderDTO order) {
         Order savedOrder = service.save(order);
         return ResponseEntity.ok(savedOrder);

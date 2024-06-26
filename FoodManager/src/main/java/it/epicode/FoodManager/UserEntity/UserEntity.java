@@ -1,5 +1,6 @@
 package it.epicode.FoodManager.UserEntity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.epicode.FoodManager.BaseEntity;
 import it.epicode.FoodManager.Order.Order;
 import jakarta.persistence.*;
@@ -22,7 +23,7 @@ public class UserEntity extends BaseEntity {
     private String password;
 
     private String companyName;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<Order> orders;
 

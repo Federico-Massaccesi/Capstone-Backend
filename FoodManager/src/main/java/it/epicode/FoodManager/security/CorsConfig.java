@@ -9,7 +9,6 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 public class CorsConfig {
 
-    //PERSONALIZZIAMO IL CORSFILTER SECONDO LE NOSTRE ESIGENZE
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -18,9 +17,8 @@ public class CorsConfig {
         configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true);
 
-        // Setta i permessi per le richieste preflight (OPTIONS)
         configuration.addExposedHeader("Authorization");
-        configuration.setMaxAge(3600L); // Cache delle preflight per 1 ora
+        configuration.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
