@@ -3,6 +3,7 @@ package it.epicode.FoodManager.Order;
 import it.epicode.FoodManager.UserEntity.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,7 +37,24 @@ public class OrderService {
         }
     }
 
+    public Order updateOrderChecked(Long orderId, boolean checked) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with id " + orderId));
 
+        if (order.getChecked() && !checked) {
+            throw new IllegalStateException("Cannot uncheck an order that has already been checked.");
+        }
+
+        order.setChecked(checked);
+        return orderRepository.save(order);
+    }
+
+    public Order updateOrderPending(Long id, Boolean pending) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with id " + id));
+        order.setPending(pending);
+        return orderRepository.save(order);
+    }
 
     public List<Order> findAll(){
         return orderRepository.findAll();

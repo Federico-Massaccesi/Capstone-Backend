@@ -51,6 +51,7 @@ try {
 
     return  new ResponseEntity<> (registeredUser, HttpStatus.OK);
 }catch (Exception e){
+    e.printStackTrace();
     throw new RuntimeException("Errore durante la registrazione");
 }
 

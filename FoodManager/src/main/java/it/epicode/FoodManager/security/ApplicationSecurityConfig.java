@@ -67,6 +67,11 @@ public class ApplicationSecurityConfig {
                                 .requestMatchers(HttpMethod.PATCH,"/api/products/**").hasAnyAuthority("ADMIN","WAREHOUSE")
                                 .requestMatchers(HttpMethod.PUT).hasAuthority("ADMIN")
                                 .requestMatchers(HttpMethod.POST,"/api/orders").hasAnyAuthority("PRIVATE","COMPANY")
+                                .requestMatchers(HttpMethod.GET,"/api/orders/**").hasAnyAuthority("ADMIN","WAREHOUSE")
+                                .requestMatchers(HttpMethod.DELETE,"/api/orders/{id}").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.PATCH,"/api/orders/**").hasAuthority("WAREHOUSE")
+
+
 
                 )
                 .httpBasic(Customizer.withDefaults())
