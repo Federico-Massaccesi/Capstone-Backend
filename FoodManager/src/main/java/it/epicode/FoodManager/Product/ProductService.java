@@ -99,7 +99,7 @@ public class ProductService {
         message.setTo(email);
         message.setSubject("New product notification");
         message.setText("Ciao! Food Manager ti avvisa che è disponibile un nuovo prodotto!" +
-                "Vai sul nostro sito sulla sezione prodotti e cerca " + product.getName() + "!");
+                "Vai sul nostro sito sulla sezione prodotti e cerca :" + product.getName() + "!");
         javaMailSender.send(message);
     }
 }
