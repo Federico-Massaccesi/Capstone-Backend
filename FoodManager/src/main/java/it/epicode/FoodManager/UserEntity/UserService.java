@@ -1,9 +1,12 @@
 package it.epicode.FoodManager.UserEntity;
 
+import it.epicode.FoodManager.Product.Product;
 import it.epicode.FoodManager.security.*;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -28,6 +31,7 @@ public class UserService {
     AuthenticationManager auth;
     @Autowired
     JwtUtils jwt;
+
 
     public Optional<LoginResponseDTO> login(String username, String password) {
         try {
@@ -107,5 +111,9 @@ public class UserService {
    }
     public void deleteById(Long id){
         userRepository.deleteById(id);
+    }
+
+    public List<UserEntity> getUsersWithCompanyOrPrivateRoles() {
+        return userRepository.findUsersWithCompanyOrPrivateRoles();
     }
 }

@@ -37,5 +37,15 @@ public class Order extends BaseEntity {
 
     private Double totalPrice;
 
-
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + getId() +
+                ", clientId=" + (client != null ? client.getId() : null) +
+                ", localDate=" + localDate +
+                ", pending=" + pending +
+                ", checked=" + checked +
+                ", totalPrice=" + totalPrice +
+                '}';
+    }
 }

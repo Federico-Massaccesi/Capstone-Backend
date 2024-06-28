@@ -36,4 +36,17 @@ public class UserEntity extends BaseEntity {
     private String city;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private final List<Roles> roles = new ArrayList<>();}
+    private final List<Roles> roles = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", pIVA='" + pIVA + '\'' +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                '}';
+    }
+
+}

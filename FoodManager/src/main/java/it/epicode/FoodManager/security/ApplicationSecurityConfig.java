@@ -57,10 +57,11 @@ public class ApplicationSecurityConfig {
                         authorize
                                 .requestMatchers("/users/login").permitAll()
                               .requestMatchers(HttpMethod.POST, "/users/register").permitAll()
-                                .requestMatchers(HttpMethod.GET,"/users/**").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.GET,"/users").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.GET,"/users/{id}").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/products/**").authenticated()
-                                .requestMatchers(HttpMethod.DELETE, "/**").hasAuthority("ADMIN")
-                                .requestMatchers(HttpMethod.POST, "/api/products").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/**").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/products").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/categories").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/categories").hasAuthority("ADMIN")
                                 .requestMatchers(HttpMethod.PUT,"/api/products/{id}/availability").hasAnyAuthority("ADMIN","WAREHOUSE")
@@ -68,7 +69,6 @@ public class ApplicationSecurityConfig {
                                 .requestMatchers(HttpMethod.PUT).hasAuthority("ADMIN")
                                 .requestMatchers(HttpMethod.POST,"/api/orders").hasAnyAuthority("PRIVATE","COMPANY")
                                 .requestMatchers(HttpMethod.GET,"/api/orders/**").hasAnyAuthority("ADMIN","WAREHOUSE")
-                                .requestMatchers(HttpMethod.DELETE,"/api/orders/{id}").hasAuthority("ADMIN")
                                 .requestMatchers(HttpMethod.PATCH,"/api/orders/**").hasAuthority("WAREHOUSE")
 
 

@@ -1,9 +1,13 @@
 package it.epicode.FoodManager.Product;
 
 import com.cloudinary.Cloudinary;
+import it.epicode.FoodManager.UserEntity.UserEntity;
+import it.epicode.FoodManager.UserEntity.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,9 +19,15 @@ public class ProductService {
     @Autowired
     ProductRepository repository;
 
+    @Autowired
+    private JavaMailSender javaMailSender;
 
+    @Autowired
+    private UserService userService;
 
     public Product save(Product product){
+
+        sendNotificationNewProduct(product);
         return repository.save(product);
     }
 
@@ -74,5 +84,22 @@ public class ProductService {
 
     public void deleteById(Long id){
         repository.deleteById(id);
+    }
+
+    public void sendNotificationNewProduct(Product product) {
+        List<UserEntity> users = userService.getUsersWithCompanyOrPrivateRoles();
+        System.out.println(users);
+        for (UserEntity user : users) {
+            sendEmail(user.getEmail(), product);
+        }
+    }
+
+    private void sendEmail(String email, Product product) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("New product notification");
+        message.setText("Ciao! Food Manager ti avvisa che è disponibile un nuovo prodotto!" +
+                "Vai sul nostro sito sulla sezione prodotti e cerca " + product.getName() + "!");
+        javaMailSender.send(message);
     }
 }
