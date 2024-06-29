@@ -43,6 +43,15 @@ public class ProductController {
         return ResponseEntity.ok(service.findById(id));
     }
 
+    @GetMapping("/search")
+    public List<Product> searchProducts(@RequestParam(name = "q", required = false) String query) {
+        if (query == null || query.isEmpty()) {
+            return List.of();
+        } else {
+            return service.findByNameStartingWith(query);
+        }
+    }
+
     @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<?> save(@RequestPart("product") @Validated ProductValidPost product, @RequestPart("file") MultipartFile file, BindingResult validator) throws IOException {
         try {

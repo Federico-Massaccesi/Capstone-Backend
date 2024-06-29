@@ -23,4 +23,5 @@ public class RegisterUserDTO {
     String address;
     String city;
     List<Roles> roles;
+    Boolean newsletter;
 }

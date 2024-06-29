@@ -87,7 +87,7 @@ public class ProductService {
     }
 
     public void sendNotificationNewProduct(Product product) {
-        List<UserEntity> users = userService.getUsersWithCompanyOrPrivateRoles();
+        List<UserEntity> users = userService.getNewsletterUsers();
         System.out.println(users);
         for (UserEntity user : users) {
             sendEmail(user.getEmail(), product);
@@ -101,5 +101,9 @@ public class ProductService {
         message.setText("Ciao! Food Manager ti avvisa che è disponibile un nuovo prodotto!" +
                 "Vai sul nostro sito sulla sezione prodotti e cerca :" + product.getName() + "!");
         javaMailSender.send(message);
+    }
+
+    public List<Product> findByNameStartingWith(String prefix) {
+        return repository.findByNameStartingWith(prefix);
     }
 }

@@ -23,6 +23,8 @@ public record RegisterUserModel(
         String city,
         String companyName,
         String pIVA,
-        List<Roles> roles
+        List<Roles> roles,
+        @NotNull
+        Boolean newsletter
 ) {
 }

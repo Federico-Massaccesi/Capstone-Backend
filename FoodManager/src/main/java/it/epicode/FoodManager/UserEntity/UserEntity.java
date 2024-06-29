@@ -38,6 +38,8 @@ public class UserEntity extends BaseEntity {
     @ManyToMany(fetch = FetchType.EAGER)
     private final List<Roles> roles = new ArrayList<>();
 
+    private Boolean newsletter;
+
     @Override
     public String toString() {
         return "UserEntity{" +

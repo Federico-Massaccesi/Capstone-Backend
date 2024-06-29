@@ -116,4 +116,12 @@ public class UserService {
     public List<UserEntity> getUsersWithCompanyOrPrivateRoles() {
         return userRepository.findUsersWithCompanyOrPrivateRoles();
     }
+
+    public List<UserEntity> getNewsletterUsers() {
+        return userRepository.findUsersForNewsletter();
+    }
+
+    public List<UserEntity> searchUsersByUsername(String query) {
+        return userRepository.searchUsersByUsername(query);
+    }
 }

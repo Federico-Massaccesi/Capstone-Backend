@@ -31,6 +31,11 @@ public class UserController {
         return ResponseEntity.ok(user.findById(id));
     }
 
+    @GetMapping("/search")
+    public List<UserEntity> searchUsersByUsername(@RequestParam(name = "q") String query) {
+        return user.searchUsersByUsername(query);
+    }
+
     @PostMapping("/register")
     public ResponseEntity<RegisteredUserDTO> register(@RequestBody @Validated RegisterUserModel model, BindingResult validator){
         if (validator.hasErrors()) {
@@ -47,6 +52,7 @@ try {
                     .withCompanyName(model.companyName())
                     .withPIVA(model.pIVA())
                     .withRoles(model.roles())
+                    .withNewsletter(model.newsletter())
                     .build());
 
     return  new ResponseEntity<> (registeredUser, HttpStatus.OK);
