@@ -19,10 +19,10 @@ public class UserController {
     @Autowired
     private UserService user;
 
-    @GetMapping
-    public ResponseEntity<List<UserEntity>> getAll() {
 
-        return ResponseEntity.ok(user.findAll());
+    @GetMapping
+    public List<UserEntity> getAllUsersWithSpecificRoles() {
+        return user.findAllWithSpecificRoles();
     }
 
     @GetMapping("/{id}")

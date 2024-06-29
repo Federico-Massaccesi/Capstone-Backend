@@ -26,6 +26,6 @@ public interface UserRepository extends JpaRepository<UserEntity,Long>, PagingAn
     @Query("SELECT u FROM UserEntity u JOIN u.roles r WHERE r.roleType IN ('COMPANY', 'PRIVATE') AND u.newsletter = true")
     List<UserEntity> findUsersForNewsletter();
 
-    @Query("SELECT u FROM UserEntity u WHERE LOWER(u.username) LIKE LOWER(CONCAT(:query, '%'))")
-    List<UserEntity> searchUsersByUsername(String query);
+    @Query("SELECT u FROM UserEntity u JOIN u.roles r WHERE LOWER(u.username) LIKE LOWER(CONCAT(:query, '%')) AND r.roleType IN ('COMPANY', 'PRIVATE')")
+    List<UserEntity> searchUsersByUsername(@Param("query") String query);
 }

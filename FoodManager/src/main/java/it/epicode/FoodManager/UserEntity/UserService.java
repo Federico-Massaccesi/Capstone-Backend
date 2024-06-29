@@ -88,6 +88,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public List<UserEntity> findAllWithSpecificRoles() {
+        return userRepository.findUsersWithCompanyOrPrivateRoles();
+    }
+
     public UserEntity findById(Long id){
         var founded = userRepository.findById(id);
         if(founded.isPresent()){
