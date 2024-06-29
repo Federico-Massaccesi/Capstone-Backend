@@ -30,8 +30,7 @@ public class Order extends BaseEntity {
     @Builder.Default
     private LocalDate localDate = LocalDate.now();
 
-    @Builder.Default
-    private Boolean pending = true;
+    private Boolean pending;
     @Builder.Default
     private Boolean checked = false;
     @Builder.Default
