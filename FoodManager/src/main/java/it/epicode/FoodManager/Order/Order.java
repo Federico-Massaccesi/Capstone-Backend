@@ -34,6 +34,8 @@ public class Order extends BaseEntity {
     private Boolean pending = true;
     @Builder.Default
     private Boolean checked = false;
+    @Builder.Default
+    private Boolean completed = false;
 
     private Double totalPrice;
 

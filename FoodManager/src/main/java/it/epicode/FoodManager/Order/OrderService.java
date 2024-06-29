@@ -60,6 +60,10 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+    public List<Order> findOrdersByUserId(Long userId) {
+        return orderRepository.findByClientId(userId);
+    }
+
     public Order findById(Long id){
         var founded = orderRepository.findById(id);
         if(founded.isPresent()){

@@ -126,6 +126,6 @@ public class UserService {
     }
 
     public List<UserEntity> searchUsersByUsername(String query) {
-        return userRepository.searchUsersByUsername(query);
+        return userRepository.searchUsers(query);
     }
 }

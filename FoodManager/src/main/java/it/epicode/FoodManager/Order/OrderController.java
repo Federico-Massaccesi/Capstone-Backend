@@ -21,6 +21,11 @@ public class OrderController {
         return ResponseEntity.ok(service.findAll());
     }
 
+    @GetMapping("/{userId}/orders")
+    public List<Order> getUserOrders(@PathVariable Long userId) {
+        return service.findOrdersByUserId(userId);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Order> getById(@PathVariable Long id) {
 
@@ -47,7 +52,7 @@ public class OrderController {
         }
     }
 
-    @PatchMapping("/{id}/pending")
+    @PatchMapping("/{id}/completed")
     public ResponseEntity<Order> updateOrderPending(@PathVariable Long id, @RequestBody Map<String, Boolean> updates) {
         Boolean pending = updates.get("pending");
         Order updatedOrder = service.updateOrderPending(id, pending);
