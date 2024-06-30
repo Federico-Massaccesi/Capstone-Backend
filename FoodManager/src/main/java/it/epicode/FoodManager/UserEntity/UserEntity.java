@@ -33,12 +33,14 @@ public class UserEntity extends BaseEntity {
 
     private String address;
 
-    private String city;
+    private String town;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private final List<Roles> roles = new ArrayList<>();
 
     private Boolean newsletter;
+
+    private Long telephoneNumber;
 
     @Override
     public String toString() {
@@ -47,7 +49,7 @@ public class UserEntity extends BaseEntity {
                 ", email='" + email + '\'' +
                 ", pIVA='" + pIVA + '\'' +
                 ", address='" + address + '\'' +
-                ", city='" + city + '\'' +
+                ", city='" + town + '\'' +
                 '}';
     }
 

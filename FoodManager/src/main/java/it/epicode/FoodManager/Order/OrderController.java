@@ -53,8 +53,18 @@ public class OrderController {
     }
 
     @PatchMapping("/{id}/completed")
+    public ResponseEntity<Order> updateOrderCompleted(@PathVariable Long id, @RequestBody Map<String, Boolean> updates) {
+        Boolean completed = updates.get("completed");
+        Order updatedOrder = service.updateOrderCompleted(id, completed);
+        return ResponseEntity.ok(updatedOrder);
+    }
+
+    @PatchMapping("/{id}/pending")
     public ResponseEntity<Order> updateOrderPending(@PathVariable Long id, @RequestBody Map<String, Boolean> updates) {
         Boolean pending = updates.get("pending");
+        if (pending == null) {
+            return ResponseEntity.badRequest().build();
+        }
         Order updatedOrder = service.updateOrderPending(id, pending);
         return ResponseEntity.ok(updatedOrder);
     }

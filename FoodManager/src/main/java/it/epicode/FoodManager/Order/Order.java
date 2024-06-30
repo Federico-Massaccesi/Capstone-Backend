@@ -1,12 +1,12 @@
 package it.epicode.FoodManager.Order;
 
 import it.epicode.FoodManager.BaseEntity;
-import it.epicode.FoodManager.Product.Product;
 import it.epicode.FoodManager.UserEntity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class Order extends BaseEntity {
     private List<CartItem> items  = new ArrayList<>();
 
     @Builder.Default
-    private LocalDate localDate = LocalDate.now();
+    private LocalDateTime localDate = LocalDateTime.now();
 
     private Boolean pending;
     @Builder.Default

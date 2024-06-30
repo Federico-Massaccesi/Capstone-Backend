@@ -49,6 +49,13 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
+    public Order updateOrderCompleted(Long id, Boolean completed) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with id " + id));
+        order.setPending(completed);
+        return orderRepository.save(order);
+    }
+
     public Order updateOrderPending(Long id, Boolean pending) {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Order not found with id " + id));
