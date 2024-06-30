@@ -35,6 +35,8 @@ public class UserEntity extends BaseEntity {
 
     private String town;
 
+    private Long CAP;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private final List<Roles> roles = new ArrayList<>();
 
