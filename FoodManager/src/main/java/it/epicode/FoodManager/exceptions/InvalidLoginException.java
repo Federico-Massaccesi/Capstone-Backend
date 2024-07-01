@@ -1,4 +1,4 @@
-package it.epicode.FoodManager.security;
+package it.epicode.FoodManager.exceptions;
 
 import java.io.Serial;
 

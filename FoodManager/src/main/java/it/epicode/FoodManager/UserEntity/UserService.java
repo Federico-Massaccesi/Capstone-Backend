@@ -1,12 +1,11 @@
 package it.epicode.FoodManager.UserEntity;
 
-import it.epicode.FoodManager.Product.Product;
+import it.epicode.FoodManager.exceptions.InvalidLoginException;
+import it.epicode.FoodManager.exceptions.UserNotFoundException;
 import it.epicode.FoodManager.security.*;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -56,7 +55,7 @@ public class UserService {
             dto.setToken(jwt.generateToken(a));
 
             return Optional.of(dto);
-        } catch (NoSuchElementException | AuthenticationException e) {
+        } catch ( AuthenticationException e) {
             throw new InvalidLoginException(username, password);
         }
     }
@@ -65,9 +64,9 @@ public class UserService {
         if(userRepository.existsByUsername(register.getUsername())){
             throw new EntityExistsException("Utente gia' esistente");
         }
-//        if(userRepository.existsByEmail(register.getEmail())){
-//            throw new EntityExistsException("Email gia' registrata");
-//        }
+        if(userRepository.existsByEmail(register.getEmail())){
+            throw new EntityExistsException("Email gia' registrata");
+        }
         Roles roles = rolesRepository.findById(register.getRoles().get(0).getRoleType())
                 .orElseThrow(() -> new IllegalArgumentException("Ruolo non valido"));
 
@@ -97,7 +96,7 @@ public class UserService {
         if(founded.isPresent()){
             return userRepository.findById(id).get();
         }else{
-            throw new RuntimeException("Utente non trovato");
+            throw new UserNotFoundException("Utente non trovato");
         }
     }
    public UserEntity modify(Long id, UserEntity order){
@@ -110,12 +109,14 @@ public class UserService {
 
             return userRepository.save(modifiedUser);
         }else{
-            throw new RuntimeException("Utente non trovato");
+            throw new UserNotFoundException("Utente non trovato");
         }
    }
     public void deleteById(Long id){
-        userRepository.deleteById(id);
-    }
+        if (!userRepository.existsById(id)) {
+            throw new UserNotFoundException("Utente non trovato con id: " + id);
+        }
+        userRepository.deleteById(id);    }
 
     public List<UserEntity> getUsersWithCompanyOrPrivateRoles() {
         return userRepository.findUsersWithCompanyOrPrivateRoles();
