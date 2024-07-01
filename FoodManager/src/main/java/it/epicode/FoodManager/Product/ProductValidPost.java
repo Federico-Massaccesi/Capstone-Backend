@@ -16,7 +16,6 @@ public record ProductValidPost(
         @NotNull
          Double price,
         @NotNull
-                @Length(max = 200)
          String description,
         @NotNull
         Boolean available

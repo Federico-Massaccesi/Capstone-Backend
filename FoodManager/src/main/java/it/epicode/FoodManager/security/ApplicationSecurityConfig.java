@@ -59,7 +59,7 @@ public class ApplicationSecurityConfig {
                               .requestMatchers(HttpMethod.POST, "/users/register").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/users").hasAuthority("ADMIN")
                                 .requestMatchers(HttpMethod.GET,"/users/{id}").authenticated()
-                                .requestMatchers(HttpMethod.GET, "/api/products/**").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                                 .requestMatchers(HttpMethod.DELETE, "/**").hasAuthority("ADMIN")
                                 .requestMatchers(HttpMethod.POST, "/api/products").hasAuthority("ADMIN")
                                 .requestMatchers(HttpMethod.GET,"/categories").permitAll()
