@@ -54,10 +54,11 @@ public class ProductController {
 
     @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<?> save(@RequestPart("product") @Validated ProductValidPost product, @RequestPart("file") MultipartFile file, BindingResult validator) throws IOException {
-        try {
+
             if (validator.hasErrors()) {
                 throw new ApiValidationException(validator.getAllErrors());
             }
+        try {
             var uploadResult = cloudinary.uploader().upload(file.getBytes(),
                     com.cloudinary.utils.ObjectUtils.asMap("public_id", product.name() + "_avatar"));
 
