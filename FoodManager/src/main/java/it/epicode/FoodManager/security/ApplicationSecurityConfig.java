@@ -64,6 +64,7 @@ public class ApplicationSecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/api/products").hasAuthority("ADMIN")
                                 .requestMatchers(HttpMethod.GET,"/categories").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/categories").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.PUT,"/api/products/{id}").hasAuthority("ADMIN")
                                 .requestMatchers(HttpMethod.PATCH,"/api/products/{id}/availability").hasAnyAuthority("ADMIN","WAREHOUSE")
                                 .requestMatchers(HttpMethod.PATCH,"/api/orders/{id}/completed").hasAuthority("WAREHOUSE")
                                 .requestMatchers(HttpMethod.PATCH,"/api/orders/{id}/pending").hasAuthority("COMPANY")
