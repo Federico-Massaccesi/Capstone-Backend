@@ -21,7 +21,7 @@ public class RegisterUserDTO {
     String companyName;
     String pIVA;
     String address;
-    String city;
+    String town;
     List<Roles> roles;
     Boolean newsletter;
 }

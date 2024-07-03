@@ -20,7 +20,7 @@ public record RegisterUserModel(
         @Size(max = 125, message ="La password è troppo lunga max 20 caratteri")
         String password,
         String address,
-        String city,
+        String town,
         String companyName,
         String pIVA,
         List<Roles> roles,

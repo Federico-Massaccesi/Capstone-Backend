@@ -29,8 +29,8 @@ public class Order extends BaseEntity {
 
     @Builder.Default
     private LocalDateTime localDate = LocalDateTime.now();
-
-    private Boolean pending;
+    @Builder.Default
+    private Boolean pending = false;
     @Builder.Default
     private Boolean checked = false;
     @Builder.Default

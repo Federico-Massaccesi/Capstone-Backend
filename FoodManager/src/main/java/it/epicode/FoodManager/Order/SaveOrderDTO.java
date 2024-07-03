@@ -14,6 +14,7 @@ public class SaveOrderDTO {
     private Long clientId;
     private List<CartItemDTO> products;
     private Double totalPrice;
+    private Boolean pending = false;
 }
 
 

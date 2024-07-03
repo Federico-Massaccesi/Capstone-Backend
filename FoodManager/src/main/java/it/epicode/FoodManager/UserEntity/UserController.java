@@ -48,7 +48,7 @@ try {
                     .withEmail(model.email())
                     .withPassword(model.password())
                     .withAddress(model.address())
-                    .withCity(model.city())
+                    .withTown(model.town())
                     .withCompanyName(model.companyName())
                     .withPIVA(model.pIVA())
                     .withRoles(model.roles())

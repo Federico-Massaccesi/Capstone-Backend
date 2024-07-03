@@ -29,6 +29,7 @@ public class OrderService {
                     .withClient(founded.get())
                     .withItems(cartItems)
                     .withTotalPrice(order.getTotalPrice())
+                    .withPending(order.getPending())
                     .build();
 
             return orderRepository.save(newOrder);
