@@ -3,9 +3,7 @@ package it.epicode.FoodManager.Product;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.epicode.FoodManager.BaseEntity;
 import it.epicode.FoodManager.Order.Order;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.File;
@@ -24,6 +22,11 @@ public class Product extends BaseEntity {
     private String name;
 
     @ManyToMany
+    @JoinTable(
+            name = "products_categories",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "categories_id")
+    )
     private List<Category> categories;
 
     private Double price;
