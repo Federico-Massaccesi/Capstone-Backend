@@ -29,13 +29,13 @@ public class UserEntity extends BaseEntity {
 
     private String email;
 
-    private String pIVA;
+    private String piva;
 
     private String address;
 
     private String town;
 
-    private Long CAP;
+    private Long cap;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private final List<Roles> roles = new ArrayList<>();
@@ -49,10 +49,13 @@ public class UserEntity extends BaseEntity {
         return "UserEntity{" +
                 "username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", pIVA='" + pIVA + '\'' +
+                ", pIVA='" + piva + '\'' +
                 ", address='" + address + '\'' +
-                ", city='" + town + '\'' +
+                ", town='" + town + '\'' +
+                ", CAP='" + cap + '\'' +
+                ", telephoneNumber='" + telephoneNumber + '\'' +
                 '}';
     }
+
 
 }

@@ -75,4 +75,12 @@ try {
     public void deleteById(@PathVariable Long id) {
         user.deleteById(id);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserEntity> updateUser(@PathVariable Long id, @RequestBody @Validated UserEntity updatedUser, BindingResult result) {
+        if (result.hasErrors()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return ResponseEntity.ok(user.updateUser(id, updatedUser));
+    }
 }

@@ -99,19 +99,18 @@ public class UserService {
             throw new UserNotFoundException("Utente non trovato");
         }
     }
-   public UserEntity modify(Long id, UserEntity order){
+    public UserEntity updateUser(Long id, UserEntity updatedUser) {
+        var existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("Utente non trovato con id: " + id));
 
-        var founded = userRepository.findById(id);
-        if(founded.isPresent()){
-            UserEntity modifiedUser = new UserEntity();
-
-            BeanUtils.copyProperties(order, modifiedUser);
-
-            return userRepository.save(modifiedUser);
-        }else{
-            throw new UserNotFoundException("Utente non trovato");
+        if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {
+            existingUser.setPassword(encoder.encode(updatedUser.getPassword()));
         }
-   }
+
+        BeanUtils.copyProperties(updatedUser, existingUser, "id", "password", "roles");
+
+        return userRepository.save(existingUser);
+    }
     public void deleteById(Long id){
         if (!userRepository.existsById(id)) {
             throw new UserNotFoundException("Utente non trovato con id: " + id);
