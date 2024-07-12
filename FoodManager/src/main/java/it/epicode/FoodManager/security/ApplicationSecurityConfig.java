@@ -72,6 +72,7 @@ public class ApplicationSecurityConfig {
                                 .requestMatchers(HttpMethod.PATCH,"/api/orders/{id}/checked").hasAuthority("WAREHOUSE")
                                 .requestMatchers(HttpMethod.POST,"/api/orders").hasAnyAuthority("PRIVATE","COMPANY")
                                 .requestMatchers(HttpMethod.GET,"/api/orders/**").authenticated()
+                                .requestMatchers(HttpMethod.POST,"/chat").permitAll()
 
                 )
                 .httpBasic(Customizer.withDefaults())
