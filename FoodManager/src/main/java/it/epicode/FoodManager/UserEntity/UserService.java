@@ -61,20 +61,23 @@ public class UserService {
     }
 
     public RegisteredUserDTO register(RegisterUserDTO register){
-        if(userRepository.existsByUsername(register.getUsername())){
+        if(userRepository.existsByUsername(register.getUsername())) {
             throw new EntityExistsException("Utente gia' esistente");
-        }
-        if(userRepository.existsByEmail(register.getEmail())){
-            throw new EntityExistsException("Email gia' registrata");
         }
         Roles roles = rolesRepository.findById(register.getRoles().get(0).getRoleType())
                 .orElseThrow(() -> new IllegalArgumentException("Ruolo non valido"));
 
         UserEntity u = new UserEntity();
         BeanUtils.copyProperties(register, u);
+
+        u.setTown(register.getTown());
+        u.setCap(register.getCap());
+        u.setTelephoneNumber(register.getTelephoneNumber());
+
         u.setPassword(encoder.encode(register.getPassword()));
         u.getRoles().add(roles);
         userRepository.save(u);
+
         RegisteredUserDTO response = new RegisteredUserDTO();
         BeanUtils.copyProperties(u, response);
         response.setRoles(List.of(roles));
@@ -102,10 +105,6 @@ public class UserService {
     public UserEntity updateUser(Long id, UserEntity updatedUser) {
         var existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("Utente non trovato con id: " + id));
-
-        if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {
-            existingUser.setPassword(encoder.encode(updatedUser.getPassword()));
-        }
 
         BeanUtils.copyProperties(updatedUser, existingUser, "id", "password", "roles");
 

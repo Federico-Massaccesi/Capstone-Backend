@@ -19,9 +19,12 @@ public class RegisterUserDTO {
     String email;
     String password;
     String companyName;
-    String pIVA;
+    String piva;
     String address;
     String town;
     List<Roles> roles;
     Boolean newsletter;
+    Long telephoneNumber;
+    Long cap;
+
 }

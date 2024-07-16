@@ -22,9 +22,11 @@ public record RegisterUserModel(
         String address,
         String town,
         String companyName,
-        String pIVA,
+        String piva,
         List<Roles> roles,
-        @NotNull
-        Boolean newsletter
+        Boolean newsletter,
+        Long cap,
+        Long telephoneNumber
+
 ) {
 }

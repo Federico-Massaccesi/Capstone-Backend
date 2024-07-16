@@ -49,8 +49,9 @@ try {
                     .withPassword(model.password())
                     .withAddress(model.address())
                     .withTown(model.town())
+                    .withCap(model.cap())
                     .withCompanyName(model.companyName())
-                    .withPIVA(model.pIVA())
+                    .withPiva(model.piva())
                     .withRoles(model.roles())
                     .withNewsletter(model.newsletter())
                     .build());

@@ -19,7 +19,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-//QUESTA ANNOTAZIONE SERVE A COMUNICARE A SPRING CHE QUESTA  CLASSE Ã¨ UTILIZZATA PER CONFIGURARE LA SECURITY
 @EnableWebSecurity()
 @EnableMethodSecurity(prePostEnabled = true)
 public class ApplicationSecurityConfig {
@@ -55,7 +54,7 @@ public class ApplicationSecurityConfig {
                 .cors(Customizer.withDefaults()) // Utilizza la configurazione CORS
                 .authorizeHttpRequests(authorize ->
                         authorize
-                                .requestMatchers("/users/login").permitAll()
+                                .requestMatchers(HttpMethod.POST,"/users/login").permitAll()
                               .requestMatchers(HttpMethod.POST, "/users/register").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/users").hasAuthority("ADMIN")
                                 .requestMatchers(HttpMethod.GET,"/users/{id}").authenticated()
